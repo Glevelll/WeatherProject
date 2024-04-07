@@ -43,18 +43,6 @@ fun RegisterPage() {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.jci),
-                contentDescription = "Image",
-                modifier = Modifier.size(70.dp)
-            )
-        }
         Text(text = "Регистрация", fontSize = 30.sp, color = Color.Black)
 
         var user by remember { mutableStateOf("") }
@@ -80,14 +68,15 @@ fun RegisterPage() {
                 ),
             shape = RoundedCornerShape(50),
             textStyle = TextStyle(
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Start,
                 fontSize = 16.sp
             ),
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
             ),
-            singleLine = true
+            singleLine = true,
+            placeholder = { Text(text = "Введите логин") }
         )
 
         TextField(
@@ -103,12 +92,12 @@ fun RegisterPage() {
                 .padding(start = 64.dp, end = 64.dp, top = 4.dp, bottom = 4.dp)
                 .border(
                     1.dp,
-                    Color(android.graphics.Color.parseColor("#FFD0BCFF")),
+                    Color(android.graphics.Color.parseColor("#7d32a8")),
                     shape = RoundedCornerShape(50)
                 ),
             shape = RoundedCornerShape(50),
             textStyle = TextStyle(
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Start,
                 fontSize = 16.sp
             ),
             colors = TextFieldDefaults.colors(
@@ -117,7 +106,8 @@ fun RegisterPage() {
             ),
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            singleLine = true
+            singleLine = true,
+            placeholder = { Text(text = "Введите пароль") }
         )
 
         TextField(
@@ -133,12 +123,12 @@ fun RegisterPage() {
                 .padding(start = 64.dp, end = 64.dp, top = 4.dp, bottom = 4.dp)
                 .border(
                     1.dp,
-                    Color(android.graphics.Color.parseColor("#FFD0BCFF")),
+                    Color(android.graphics.Color.parseColor("#7d32a8")),
                     shape = RoundedCornerShape(50)
                 ),
             shape = RoundedCornerShape(50),
             textStyle = TextStyle(
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Start,
                 fontSize = 16.sp
             ),
             colors = TextFieldDefaults.colors(
@@ -147,7 +137,8 @@ fun RegisterPage() {
             ),
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            singleLine = true
+            singleLine = true,
+            placeholder = { Text(text = "Повторите пароль") }
         )
 
         Button(

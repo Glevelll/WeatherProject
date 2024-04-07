@@ -44,18 +44,7 @@ fun LoginPage() {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.jci),
-                contentDescription = "Image",
-                modifier = Modifier.size(70.dp)
-            )
-        }
+
         Text(text = "Вход", fontSize = 30.sp, color = Color.Black)
 
         var user by remember { mutableStateOf("") }
@@ -79,14 +68,15 @@ fun LoginPage() {
                 ),
             shape = RoundedCornerShape(50),
             textStyle = TextStyle(
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Start,
                 fontSize = 16.sp
             ),
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
             ),
-            singleLine = true
+            singleLine = true,
+            placeholder = { Text(text = "Введите логин") }
         )
 
         TextField(value = pass,
@@ -101,12 +91,12 @@ fun LoginPage() {
                 .padding(start = 64.dp, end = 64.dp, top = 4.dp, bottom = 4.dp)
                 .border(
                     1.dp,
-                    Color(android.graphics.Color.parseColor("#FFD0BCFF")),
+                    Color(android.graphics.Color.parseColor("#7d32a8")),
                     shape = RoundedCornerShape(50)
                 ),
             shape = RoundedCornerShape(50),
             textStyle = TextStyle(
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Start,
                 fontSize = 16.sp
             ),
             colors = TextFieldDefaults.colors(
@@ -115,7 +105,8 @@ fun LoginPage() {
             ),
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            singleLine = true
+            singleLine = true,
+            placeholder = { Text(text = "Введите пароль") }
         )
 
         Button(onClick = {/*TODO*/},
