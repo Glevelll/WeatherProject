@@ -16,6 +16,7 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +25,10 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.jetpackproject.R
+import com.example.jetpackproject.activities.LoginAndReg.Login.LoginPage
+import com.example.jetpackproject.activities.LoginAndReg.Login.LoginViewModel
+import com.example.jetpackproject.activities.LoginAndReg.Registration.RegisterPage
+import com.example.jetpackproject.activities.LoginAndReg.Registration.RegisterViewModel
 import com.example.jetpackproject.data.JetpackDatabase
 import kotlinx.coroutines.launch
 
@@ -33,6 +38,8 @@ fun PagerScreen(db: JetpackDatabase, context: Context) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState {2}
     val focusManager = LocalFocusManager.current
+    val loginViewModel = remember { LoginViewModel() }
+    val registerViewModel = remember { RegisterViewModel() }
 
     Column {
         Box(
@@ -75,8 +82,8 @@ fun PagerScreen(db: JetpackDatabase, context: Context) {
 
         HorizontalPager(state = pagerState) { page ->
             when (page) {
-                0 -> LoginPage(db, context, coroutineScope)
-                1 -> RegisterPage(db, context, coroutineScope)
+                0 -> LoginPage(db, context, coroutineScope, loginViewModel)
+                1 -> RegisterPage(db, context, coroutineScope, registerViewModel)
             }
         }
 

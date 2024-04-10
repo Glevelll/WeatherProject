@@ -1,8 +1,6 @@
-package com.example.jetpackproject.activities.LoginAndReg
+package com.example.jetpackproject.activities.LoginAndReg.Login
 
 import android.content.Context
-import android.content.Intent
-import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,9 +18,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,17 +29,17 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.jetpackproject.activities.greetings.Greetings
 import com.example.jetpackproject.data.JetpackDatabase
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 @Composable
-fun LoginPage(db: JetpackDatabase, context: Context, coroutineScope: CoroutineScope) {
-    val maxChar = 18
+fun LoginPage(
+    db: JetpackDatabase,
+    context: Context,
+    coroutineScope: CoroutineScope,
+    viewModel: LoginViewModel
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
@@ -52,16 +48,9 @@ fun LoginPage(db: JetpackDatabase, context: Context, coroutineScope: CoroutineSc
 
         Text(text = "Вход", fontSize = 30.sp, color = Color.Black)
 
-        var user by remember { mutableStateOf("") }
-        var pass by remember { mutableStateOf("") }
-
         val passwordVisible by rememberSaveable() { mutableStateOf(false) }
-        TextField(value = user,
-            onValueChange = { newValue ->
-                if (newValue.length <= maxChar) {
-                    user = newValue
-                }
-            },
+        TextField(value = viewModel.user.value,
+            onValueChange = viewModel::userInput,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(66.dp)
@@ -84,12 +73,8 @@ fun LoginPage(db: JetpackDatabase, context: Context, coroutineScope: CoroutineSc
             placeholder = { Text(text = "Введите логин") }
         )
 
-        TextField(value = pass,
-            onValueChange = { newValue ->
-                if (newValue.length <= maxChar) {
-                    pass = newValue
-                }
-            },
+        TextField(value = viewModel.pass.value,
+            onValueChange = viewModel::passInput,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(66.dp)
@@ -115,19 +100,8 @@ fun LoginPage(db: JetpackDatabase, context: Context, coroutineScope: CoroutineSc
         )
 
         Button(onClick = {
-                coroutineScope.launch(Dispatchers.IO) {
-                    val user = db.userDao().getUserByUsername(user)
-                    withContext(Dispatchers.Main) {
-                        if (user != null && user.password == pass) {
-                            Toast.makeText(context, "Успешная авторизация", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(context, Greetings::class.java)
-                            context.startActivity(intent)
-                        } else {
-                            Toast.makeText(context, "Неверный логин или пароль", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            },
+            viewModel.onLoginClicked(db.userDao(), context, coroutineScope)
+        },
             Modifier
                 .fillMaxWidth()
                 .height(66.dp)

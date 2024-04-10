@@ -1,8 +1,6 @@
-package com.example.jetpackproject.activities.LoginAndReg
+package com.example.jetpackproject.activities.LoginAndReg.Registration
 
 import android.content.Context
-import android.content.Intent
-import android.widget.Toast
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,9 +18,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,17 +29,16 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.jetpackproject.activities.greetings.Greetings
 import com.example.jetpackproject.data.JetpackDatabase
-import com.example.jetpackproject.data.User
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @Composable
-fun RegisterPage(db: JetpackDatabase, context: Context, coroutineScope: CoroutineScope) {
-    val maxChar = 18
+fun RegisterPage(
+    db: JetpackDatabase,
+    context: Context,
+    coroutineScope: CoroutineScope,
+    viewModel: RegisterViewModel
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
@@ -51,18 +46,9 @@ fun RegisterPage(db: JetpackDatabase, context: Context, coroutineScope: Coroutin
     ) {
         Text(text = "Регистрация", fontSize = 30.sp, color = Color.Black)
 
-        var user by remember { mutableStateOf("") }
-        var pass by remember { mutableStateOf("") }
-        var confirm_pass by remember { mutableStateOf("") }
-
         val passwordVisible by rememberSaveable() { mutableStateOf(false) }
-        TextField(
-            value = user,
-            onValueChange = { newValue ->
-                if (newValue.length <= maxChar) {
-                    user = newValue
-                }
-            },
+        TextField(value = viewModel.user.value,
+            onValueChange = viewModel::userReg,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(66.dp)
@@ -85,13 +71,8 @@ fun RegisterPage(db: JetpackDatabase, context: Context, coroutineScope: Coroutin
             placeholder = { Text(text = "Введите логин") }
         )
 
-        TextField(
-            value = pass,
-            onValueChange = { newValue ->
-                if (newValue.length <= maxChar) {
-                    pass = newValue
-                }
-            },
+        TextField(value = viewModel.pass.value,
+            onValueChange = viewModel::passReg,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(66.dp)
@@ -116,13 +97,8 @@ fun RegisterPage(db: JetpackDatabase, context: Context, coroutineScope: Coroutin
             placeholder = { Text(text = "Введите пароль") }
         )
 
-        TextField(
-            value = confirm_pass,
-            onValueChange = { newValue ->
-                if (newValue.length <= maxChar) {
-                    confirm_pass = newValue
-                }
-            },
+        TextField(value = viewModel.confirm_pass.value,
+            onValueChange = viewModel::confPassReg,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(66.dp)
@@ -149,28 +125,7 @@ fun RegisterPage(db: JetpackDatabase, context: Context, coroutineScope: Coroutin
 
         Button(
             onClick = {
-                coroutineScope.launch(Dispatchers.IO) {
-                    val existingUser = db.userDao().getUserByUsername(user)
-                    if (existingUser != null) {
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(context, "Пользователь уже зарегистрирован", Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        if (pass != confirm_pass) {
-                            withContext(Dispatchers.Main) {
-                                Toast.makeText(context, "Пароли не совпадают", Toast.LENGTH_SHORT).show()
-                            }
-                        } else {
-                            val newUser = User(username = user, password = pass)
-                            db.userDao().insertUser(newUser)
-                            withContext(Dispatchers.Main) {
-                                Toast.makeText(context, "Успешная регистрация", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(context, Greetings::class.java)
-                                context.startActivity(intent)
-                            }
-                        }
-                    }
-                }
+                viewModel.onRegClicked(db.userDao(), context, coroutineScope)
             },
             Modifier
                 .fillMaxWidth()
