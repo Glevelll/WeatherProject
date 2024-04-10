@@ -1,10 +1,10 @@
-package com.example.jetpackproject
+package com.example.jetpackproject.activities.LoginAndReg
 
+import android.content.Context
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,11 +23,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.jetpackproject.R
+import com.example.jetpackproject.data.JetpackDatabase
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PagerScreen() {
+fun PagerScreen(db: JetpackDatabase, context: Context) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState {2}
     val focusManager = LocalFocusManager.current
@@ -73,8 +75,8 @@ fun PagerScreen() {
 
         HorizontalPager(state = pagerState) { page ->
             when (page) {
-                0 -> LoginPage()
-                1 -> RegisterPage()
+                0 -> LoginPage(db, context, coroutineScope)
+                1 -> RegisterPage(db, context, coroutineScope)
             }
         }
 
