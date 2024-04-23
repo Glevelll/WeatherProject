@@ -39,30 +39,37 @@ class RegisterViewModel : ViewModel() {
 
     fun onRegClicked(userDao: UserDao, context: Context, coroutineScope: CoroutineScope) {
         coroutineScope.launch(Dispatchers.IO) {
-            val existingUser = userDao.getUserByUsername(user.value)
-            if (existingUser != null) {
+            if (user.value.isNullOrEmpty() || pass.value.isNullOrEmpty() || confirm_pass.value.isNullOrEmpty()) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(context, "Пользователь уже зарегистрирован", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                if (pass.value != confirm_pass.value) {
+                val existingUser = userDao.getUserByUsername(user.value)
+                if (existingUser != null) {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Пароли не совпадают", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Пользователь уже зарегистрирован", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    val newUser = User(username = user.value, password = pass.value)
-                    userDao.insertUser(newUser)
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Успешная регистрация", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(context, Greetings::class.java)
-                        context.startActivity(intent)
-                        user.value = ""
-                        pass.value = ""
-                        confirm_pass.value = ""
+                    if (pass.value != confirm_pass.value) {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(context, "Пароли не совпадают", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        val newUser = User(username = user.value, password = pass.value)
+                        userDao.insertUser(newUser)
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(context, "Успешная регистрация", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(context, Greetings::class.java)
+                            context.startActivity(intent)
+                            user.value = ""
+                            pass.value = ""
+                            confirm_pass.value = ""
+                        }
                     }
                 }
             }
         }
     }
+
 
 }

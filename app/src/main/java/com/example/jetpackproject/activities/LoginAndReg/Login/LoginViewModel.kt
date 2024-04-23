@@ -31,16 +31,22 @@ class LoginViewModel : ViewModel() {
 
     fun onLoginClicked(userDao: UserDao, context: Context, coroutineScope: CoroutineScope) {
         coroutineScope.launch(Dispatchers.IO) {
-            val userDB = userDao.getUserByUsername(user.value)
-            withContext(Dispatchers.Main) {
-                if (userDB != null && userDB.password == pass.value) {
-                    Toast.makeText(context, "Успешная авторизация", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(context, Greetings::class.java)
-                    context.startActivity(intent)
-                    user.value = ""
-                    pass.value = ""
-                } else {
-                    Toast.makeText(context, "Неверный логин или пароль", Toast.LENGTH_SHORT).show()
+            if (user.value.isEmpty() || pass.value.isEmpty()) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                val userDB = userDao.getUserByUsername(user.value)
+                withContext(Dispatchers.Main) {
+                    if (userDB != null && userDB.password == pass.value) {
+                        Toast.makeText(context, "Успешная авторизация", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(context, Greetings::class.java)
+                        context.startActivity(intent)
+                        user.value = ""
+                        pass.value = ""
+                    } else {
+                        Toast.makeText(context, "Неверный логин или пароль", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
