@@ -29,7 +29,7 @@ import com.example.jetpackproject.activities.LoginAndReg.Login.LoginPage
 import com.example.jetpackproject.activities.LoginAndReg.Login.LoginViewModel
 import com.example.jetpackproject.activities.LoginAndReg.Registration.RegisterPage
 import com.example.jetpackproject.activities.LoginAndReg.Registration.RegisterViewModel
-import com.example.jetpackproject.data.JetpackDatabase
+import com.example.jetpackproject.data.local.JetpackDatabase
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -40,6 +40,11 @@ fun PagerScreen(db: JetpackDatabase, context: Context) {
     val focusManager = LocalFocusManager.current
     val loginViewModel = remember { LoginViewModel() }
     val registerViewModel = remember { RegisterViewModel() }
+    val switchToLoginPage: () -> Unit = {
+        coroutineScope.launch {
+            pagerState.scrollToPage(0)
+        }
+    }
 
     Column {
         Box(
@@ -83,7 +88,7 @@ fun PagerScreen(db: JetpackDatabase, context: Context) {
         HorizontalPager(state = pagerState) { page ->
             when (page) {
                 0 -> LoginPage(db, context, coroutineScope, loginViewModel)
-                1 -> RegisterPage(db, context, coroutineScope, registerViewModel)
+                1 -> RegisterPage(db, context, coroutineScope, registerViewModel, switchToLoginPage)
             }
         }
 

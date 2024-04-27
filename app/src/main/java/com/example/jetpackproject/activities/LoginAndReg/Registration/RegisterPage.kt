@@ -29,7 +29,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.jetpackproject.data.JetpackDatabase
+import com.example.jetpackproject.data.local.JetpackDatabase
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -37,7 +37,8 @@ fun RegisterPage(
     db: JetpackDatabase,
     context: Context,
     coroutineScope: CoroutineScope,
-    viewModel: RegisterViewModel
+    viewModel: RegisterViewModel,
+    switchToLoginPage: () -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -125,7 +126,9 @@ fun RegisterPage(
 
         Button(
             onClick = {
-                viewModel.onRegClicked(db.userDao(), context, coroutineScope)
+                viewModel.onRegClicked(db.userDao(), context, coroutineScope) {
+                    switchToLoginPage.invoke()
+                }
             },
             Modifier
                 .fillMaxWidth()

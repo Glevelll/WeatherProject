@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.jetpackproject.activities.greetings.Greetings
-import com.example.jetpackproject.data.UserDao
+import com.example.jetpackproject.data.local.UserDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

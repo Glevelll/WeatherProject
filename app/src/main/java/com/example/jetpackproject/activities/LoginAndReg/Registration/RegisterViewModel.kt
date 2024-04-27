@@ -6,8 +6,8 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.jetpackproject.activities.greetings.Greetings
-import com.example.jetpackproject.data.User
-import com.example.jetpackproject.data.UserDao
+import com.example.jetpackproject.data.local.User
+import com.example.jetpackproject.data.local.UserDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,9 +37,9 @@ class RegisterViewModel : ViewModel() {
         }
     }
 
-    fun onRegClicked(userDao: UserDao, context: Context, coroutineScope: CoroutineScope) {
+    fun onRegClicked(userDao: UserDao, context: Context, coroutineScope: CoroutineScope, onSuccess: () -> Unit) {
         coroutineScope.launch(Dispatchers.IO) {
-            if (user.value.isNullOrEmpty() || pass.value.isNullOrEmpty() || confirm_pass.value.isNullOrEmpty()) {
+            if (user.value.isEmpty() || pass.value.isEmpty() || confirm_pass.value.isEmpty()) {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, "Заполните все поля", Toast.LENGTH_SHORT).show()
                 }
@@ -59,8 +59,7 @@ class RegisterViewModel : ViewModel() {
                         userDao.insertUser(newUser)
                         withContext(Dispatchers.Main) {
                             Toast.makeText(context, "Успешная регистрация", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(context, Greetings::class.java)
-                            context.startActivity(intent)
+                            onSuccess()
                             user.value = ""
                             pass.value = ""
                             confirm_pass.value = ""
