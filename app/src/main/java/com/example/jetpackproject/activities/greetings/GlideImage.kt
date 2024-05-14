@@ -1,5 +1,6 @@
 package com.example.jetpackproject.activities.greetings
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
@@ -20,11 +22,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @Composable
-fun GlideImage(url: String) {
-    val context = LocalContext.current
-    val imageBitmap = remember(url) { mutableStateOf<ImageBitmap?>(null) }
-
-    LaunchedEffect(url) {
+fun GlideImage(context: Context, url: String) {
+    val imageBitmap = produceState<ImageBitmap?>(initialValue = null) {
         val bitmap = withContext(Dispatchers.IO) {
             Glide.with(context)
                 .asBitmap()
@@ -33,11 +32,10 @@ fun GlideImage(url: String) {
                 .get()
                 ?.asImageBitmap()
         }
-        imageBitmap.value = bitmap
+        value = bitmap
     }
 
-    val bitmap = imageBitmap.value
-    if (bitmap != null) {
+    imageBitmap.value?.let { bitmap ->
         Image(
             painter = BitmapPainter(bitmap),
             contentDescription = null,
@@ -46,6 +44,3 @@ fun GlideImage(url: String) {
         )
     }
 }
-
-
-

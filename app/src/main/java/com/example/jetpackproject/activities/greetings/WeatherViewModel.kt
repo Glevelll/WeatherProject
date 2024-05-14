@@ -20,8 +20,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class WeatherViewModel : ViewModel() {
     private val weatherService = provideWeatherService()
 
-    private val _weatherData = mutableStateOf<WeatherResponse?>(null) //Изменяемое состояние
-    val weatherData: State<WeatherResponse?> = _weatherData //Неизменяемое состояние
+    private val _weatherData = mutableStateOf<WeatherResponse?>(null)
+    val weatherData: State<WeatherResponse?> = _weatherData
 
     fun getWeather(city: String, apiKey: String) {
         viewModelScope.launch {

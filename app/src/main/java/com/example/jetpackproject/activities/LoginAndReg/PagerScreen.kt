@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun PagerScreen(db: JetpackDatabase, context: Context) {
     val coroutineScope = rememberCoroutineScope()
-    val pagerState = rememberPagerState {2}
+    val pagerState = rememberPagerState { 2 }
     val focusManager = LocalFocusManager.current
     val loginViewModel = remember { LoginViewModel() }
     val registerViewModel = remember { RegisterViewModel() }
@@ -48,7 +48,8 @@ fun PagerScreen(db: JetpackDatabase, context: Context) {
 
     Column {
         Box(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(top = 20.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -59,9 +60,10 @@ fun PagerScreen(db: JetpackDatabase, context: Context) {
             )
         }
 
-        TabRow(selectedTabIndex = pagerState.currentPage, modifier = Modifier
-            .height(40.dp)
-            .fillMaxWidth()
+        TabRow(
+            selectedTabIndex = pagerState.currentPage, modifier = Modifier
+                .height(40.dp)
+                .fillMaxWidth()
         ) {
             Tab(
                 selected = pagerState.currentPage == 0,

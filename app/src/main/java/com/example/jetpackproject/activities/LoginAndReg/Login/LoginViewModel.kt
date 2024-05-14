@@ -40,6 +40,8 @@ class LoginViewModel : ViewModel() {
                 withContext(Dispatchers.Main) {
                     if (userDB != null && userDB.password == pass.value) {
                         Toast.makeText(context, "Успешная авторизация", Toast.LENGTH_SHORT).show()
+                        val sharedPref = context.getSharedPreferences("AUTH_PREFS", Context.MODE_PRIVATE)
+                        sharedPref.edit().putBoolean("isUserLoggedIn", true).apply()
                         val intent = Intent(context, Greetings::class.java)
                         context.startActivity(intent)
                         user.value = ""

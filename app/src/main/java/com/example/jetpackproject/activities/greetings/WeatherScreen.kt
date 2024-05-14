@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.util.Log
@@ -38,6 +39,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.jetpackproject.activities.LoginAndReg.MainActivity
 import com.example.jetpackproject.data.remote.WeatherResponse
 import com.google.android.gms.location.LocationServices
 
@@ -124,6 +126,22 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel, context: Context) {
             Text(text = "Погода по месту")
         }
 
+        Button(
+            onClick = {
+                val sharedPref = context.getSharedPreferences("AUTH_PREFS", Context.MODE_PRIVATE)
+                sharedPref.edit().putBoolean("isUserLoggedIn", false).apply()
+
+                val intent = Intent(context, MainActivity::class.java)
+                context.startActivity(intent)
+            },
+            modifier = Modifier
+                .padding(8.dp)
+                .size(width = 200.dp, height = 50.dp)
+                .clip(RoundedCornerShape(50.dp))
+        ) {
+            Text(text = "Выйти")
+        }
+
         Spacer(modifier = Modifier.height(16.dp))
 
         val weatherData by remember { weatherViewModel.weatherData }
@@ -142,7 +160,7 @@ fun WeatherScreen(weatherViewModel: WeatherViewModel, context: Context) {
                 text = "Давление: ${data.main.pressure}",
                 style = TextStyle(fontSize = 20.sp)
             )
-            GlideImage(url = "https://openweathermap.org/img/w/${data.weather[0].icon}.png")
+            GlideImage(context = context, url = "https://openweathermap.org/img/w/${data.weather[0].icon}.png")
         } ?: run {
             Box(
                 modifier = Modifier
