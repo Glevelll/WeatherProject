@@ -4,7 +4,11 @@
 
 # Используемый стек
 Kotlin
+
 Android Studio
+
 Jetpack Compose
+
 Room
+
 Retrofit
