@@ -85,4 +85,7 @@ dependencies {
     kapt ("com.google.dagger:hilt-android-compiler:2.51.1")
     kapt ("androidx.hilt:hilt-compiler:1.2.0")
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("com.squareup.moshi:moshi:1.12.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation ("com.google.android.gms:play-services-location:20.0.0")
 }
