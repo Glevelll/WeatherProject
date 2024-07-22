@@ -1,4 +1,4 @@
-package com.example.jetpackproject.presentation
+package com.example.jetpackproject.presentation.weather
 
 import com.example.jetpackproject.domain.weather.WeatherInfo
 

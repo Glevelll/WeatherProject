@@ -1,5 +1,56 @@
-package com.example.jetpackproject.presentation
+package com.example.jetpackproject.presentation.authorization
 
+//import androidx.glance.appwidget.GlanceAppWidget
+//import androidx.glance.appwidget.GlanceAppWidgetReceiver
+//import androidx.glance.text.Text
+//import androidx.glance.text.TextStyle
+//import androidx.compose.ui.unit.sp
+//import androidx.compose.ui.graphics.Color
+//import androidx.glance.layout.Column
+//import androidx.glance.layout.fillMaxSize
+//import androidx.glance.layout.Alignment
+//import androidx.glance.Button
+//import androidx.glance.GlanceModifier
+//import android.content.Context
+//import android.graphics.Bitmap
+//import android.graphics.BitmapFactory
+//import androidx.compose.foundation.layout.Box
+//import androidx.compose.foundation.layout.size
+//import androidx.compose.runtime.LaunchedEffect
+//import androidx.compose.runtime.getValue
+//import androidx.compose.runtime.mutableStateOf
+//import androidx.compose.runtime.remember
+//import androidx.compose.runtime.rememberUpdatedState
+//import androidx.compose.runtime.setValue
+//import androidx.compose.ui.unit.dp
+//
+//import androidx.glance.GlanceId
+//import androidx.glance.Image
+//import androidx.glance.ImageProvider
+//import androidx.glance.action.ActionParameters
+//import androidx.glance.action.clickable
+//import androidx.glance.appwidget.action.ActionCallback
+//import androidx.glance.appwidget.action.actionRunCallback
+//import androidx.glance.appwidget.provideContent
+//import androidx.glance.appwidget.updateAll
+//import androidx.glance.background
+//import androidx.glance.layout.size
+//import androidx.work.CoroutineWorker
+//import androidx.work.ExistingPeriodicWorkPolicy
+//import androidx.work.PeriodicWorkRequest
+//import androidx.work.WorkManager
+//import androidx.work.WorkerParameters
+//import com.example.jetpackproject.R
+//import com.example.jetpackproject.activities.greetings.WeatherViewModel
+//import kotlinx.coroutines.Dispatchers
+//import kotlinx.coroutines.withContext
+//import java.net.URL
+//import java.time.LocalTime
+//import java.time.format.DateTimeFormatter
+//import kotlin.time.Duration.Companion.minutes
+//import kotlin.time.Duration.Companion.seconds
+//import kotlin.time.toJavaDuration
+//
 //object WeatherWidget : GlanceAppWidget() {
 //    private val apiKey = "8c5998f18ccf9118f1d56e8db5ea65e0"
 //    private var iconBitmap by mutableStateOf<Bitmap?>(null)
@@ -31,7 +82,7 @@ package com.example.jetpackproject.presentation
 //                verticalAlignment = Alignment.Vertical.CenterVertically,
 //                horizontalAlignment = Alignment.Horizontal.CenterHorizontally
 //            ) {
-//                if (isUserLoggedIn && (checkLocationPermissions(context))) {
+//                if (isUserLoggedIn) {
 //                    weatherData?.let { data ->
 //                        val temperatureCelsius = (data.main.temp - 273).toInt()
 //                        val feelsLikeCelsius = (data.main.feels_like - 273).toInt()
@@ -63,16 +114,9 @@ package com.example.jetpackproject.presentation
 //                            )
 //                        )
 //                    }
-//                } else if(!isUserLoggedIn) {
+//                } else {
 //                    Text(
 //                        text = "Необходимо авторизоваться",
-//                        style = TextStyle(
-//                            fontSize = 20.sp
-//                        )
-//                    )
-//                } else if(!(checkLocationPermissions(context))) {
-//                    Text(
-//                        text = "Нужно разрешение на геолокацию",
 //                        style = TextStyle(
 //                            fontSize = 20.sp
 //                        )
@@ -126,17 +170,4 @@ package com.example.jetpackproject.presentation
 //        }
 //        return Result.success()
 //    }
-//}
-//
-//private fun checkLocationPermissions(context: Context): Boolean {
-//    val fineLocationPermission = ContextCompat.checkSelfPermission(
-//        context,
-//        Manifest.permission.ACCESS_FINE_LOCATION
-//    ) == PackageManager.PERMISSION_GRANTED
-//    val coarseLocationPermission = ContextCompat.checkSelfPermission(
-//        context,
-//        Manifest.permission.ACCESS_COARSE_LOCATION
-//    ) == PackageManager.PERMISSION_GRANTED
-//
-//    return fineLocationPermission && coarseLocationPermission
 //}

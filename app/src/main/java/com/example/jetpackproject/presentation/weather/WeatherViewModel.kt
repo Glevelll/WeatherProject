@@ -1,11 +1,10 @@
-package com.example.jetpackproject.presentation
+package com.example.jetpackproject.presentation.weather
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.jetpackproject.domain.location.LocationTracker
 import com.example.jetpackproject.domain.repository.WeatherRepository
 import com.example.jetpackproject.domain.util.Resource
@@ -45,7 +44,7 @@ class WeatherViewModel @Inject constructor(
                         )
                     }
                 }
-            }?: kotlin.run {
+            } ?: kotlin.run {
                 state = state.copy(
                     isLoading = false,
                     error = "Невозможно определить местоположение"

@@ -1,4 +1,4 @@
-package com.example.jetpackproject.presentation.loginReg.Login
+package com.example.jetpackproject.presentation.authorization.login
 
 import android.content.Context
 import android.content.Intent
@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.jetpackproject.data.local.UserDao
-import com.example.jetpackproject.presentation.WeatherActivity
+import com.example.jetpackproject.presentation.weather.WeatherActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

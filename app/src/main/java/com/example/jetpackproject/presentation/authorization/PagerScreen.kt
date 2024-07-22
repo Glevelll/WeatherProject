@@ -1,4 +1,4 @@
-package com.example.jetpackproject.presentation.loginReg
+package com.example.jetpackproject.presentation.authorization
 
 import android.content.Context
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -25,11 +25,11 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.jetpackproject.R
-import com.example.jetpackproject.presentation.loginReg.Login.LoginPage
-import com.example.jetpackproject.presentation.loginReg.Login.LoginViewModel
-import com.example.jetpackproject.presentation.loginReg.Registration.RegisterPage
-import com.example.jetpackproject.presentation.loginReg.Registration.RegisterViewModel
 import com.example.jetpackproject.data.local.JetpackDatabase
+import com.example.jetpackproject.presentation.authorization.login.LoginPage
+import com.example.jetpackproject.presentation.authorization.login.LoginViewModel
+import com.example.jetpackproject.presentation.authorization.registration.RegisterPage
+import com.example.jetpackproject.presentation.authorization.registration.RegisterViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)

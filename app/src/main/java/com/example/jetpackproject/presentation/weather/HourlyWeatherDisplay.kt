@@ -1,4 +1,4 @@
-package com.example.jetpackproject.presentation
+package com.example.jetpackproject.presentation.weather
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.room.util.TableInfo
 import com.example.jetpackproject.domain.weather.WeatherData
 import java.time.format.DateTimeFormatter
 
@@ -43,7 +42,7 @@ fun HourlyWeatherDisplay(
             modifier = Modifier.width(40.dp)
         )
         Text(
-            text = "${weatherData.temperature}°C",
+            text = "${weatherData.temperatureCelsius}°C",
             color = textColor,
             fontWeight = FontWeight.Bold
         )

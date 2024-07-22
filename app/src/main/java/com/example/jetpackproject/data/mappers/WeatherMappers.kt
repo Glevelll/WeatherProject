@@ -1,5 +1,7 @@
 package com.example.jetpackproject.data.mappers
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.jetpackproject.data.remote.WeatherDataDto
 import com.example.jetpackproject.data.remote.WeatherDto
 import com.example.jetpackproject.domain.weather.WeatherData
@@ -13,6 +15,7 @@ private data class IndexedWeatherData(
     val data: WeatherData
 )
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun WeatherDataDto.toWeatherDataMap(): Map<Int, List<WeatherData>> {
     return time.mapIndexed { index, time ->
         val temperature = temperatures[index]
@@ -24,9 +27,9 @@ fun WeatherDataDto.toWeatherDataMap(): Map<Int, List<WeatherData>> {
             index = index,
             data = WeatherData(
                 time = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME),
-                temperature = temperature,
+                temperatureCelsius = temperature,
                 pressure = pressure,
-                wind = windSpeed,
+                windSpeed = windSpeed,
                 humidity = humidity,
                 weatherType = WeatherType.fromWMO(weatherCode)
             )
@@ -38,6 +41,7 @@ fun WeatherDataDto.toWeatherDataMap(): Map<Int, List<WeatherData>> {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun WeatherDto.toWeatherInfo(): WeatherInfo {
     val weatherDataMap = weatherData.toWeatherDataMap()
     val now = LocalDateTime.now()

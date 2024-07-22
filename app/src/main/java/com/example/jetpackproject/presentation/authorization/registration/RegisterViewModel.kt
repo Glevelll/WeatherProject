@@ -1,4 +1,4 @@
-package com.example.jetpackproject.presentation.loginReg.Registration
+package com.example.jetpackproject.presentation.authorization.registration
 
 import android.content.Context
 import android.widget.Toast
