@@ -32,7 +32,6 @@ import kotlin.math.roundToInt
 @Composable
 fun WeatherCard(
     state: WeatherState,
-    backgroundColor: Color,
     modifier: Modifier = Modifier
 ) {
     state.weatherInfo?.currentWeatherData?.let { data ->

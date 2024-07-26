@@ -58,8 +58,7 @@ class WeatherActivity : ComponentActivity() {
                             .background(Color.Gray)
                     ) {
                         WeatherCard(
-                            state = viewModel.state,
-                            backgroundColor = Color.LightGray
+                            state = viewModel.state
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         WeatherForecast(state = viewModel.state)
